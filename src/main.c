@@ -6,7 +6,7 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 10:15:29 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 14:45:06 by relaforg         ###   ########.fr       */
+/*   Updated: 2026/02/28 16:34:43 by secros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int	main(void)
 	t_hashtable	*hashtable;
 
 	hashtable = init_hashtable(1);
+	hashtable_set_strategie(&hashtable, DEFAULT);
 	if (!hashtable)
 		return (1);
 	get_inputs(&hashtable);

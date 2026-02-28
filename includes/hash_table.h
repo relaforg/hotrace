@@ -6,7 +6,7 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 10:18:53 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 14:39:28 by relaforg         ###   ########.fr       */
+/*   Updated: 2026/02/28 15:28:59 by secros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,19 @@ typedef struct s_node
 	struct s_node	*next;
 }	t_node;
 
+enum	e_collide
+{
+	DEFAULT,
+	REPLACE,
+	CONCAT,
+};
+
 typedef struct s_hashtable
 {
-	t_node	**table;
-	int		size;
-	int		el_nbr;
+	enum e_collide	strategie;
+	t_node			**table;
+	int				size;
+	int				el_nbr;
 }	t_hashtable;
 
 int			hash(const char *str, int table_size);
@@ -40,5 +48,6 @@ t_node		*search(t_hashtable *tab, const char *key);
 void		delete_from_hashtable(t_hashtable **tab, const char *key);
 float		load_factor(t_hashtable *tab);
 void		increase_hashtable_size(t_hashtable **tab);
+void		hashtable_set_strategie(t_hashtable **tab, enum e_collide opt);
 
 #endif

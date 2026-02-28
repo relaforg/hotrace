@@ -6,7 +6,7 @@
 /*   By: secros <secros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 09:29:37 by secros            #+#    #+#             */
-/*   Updated: 2024/11/30 16:55:51 by secros           ###   ########.fr       */
+/*   Updated: 2026/02/28 15:19:19 by secros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	is_new_line(char *str)
 	return (0);
 }
 
-char	*ft_strfreejoin(char *s1, char *s2)
+char	*ft_strfreejoin(const char *s1, const char *s2)
 {
 	char	*fs;
 	size_t	len1;
@@ -52,7 +52,7 @@ char	*ft_strfreejoin(char *s1, char *s2)
 		len2++;
 	fs = (char *) malloc(sizeof(char) * (len1 + len2 + 1));
 	if (!fs && s1)
-		free(s1);
+		free((void*)s1);
 	if (!fs)
 		return (NULL);
 	fs[len1 + len2] = '\0';
@@ -61,6 +61,6 @@ char	*ft_strfreejoin(char *s1, char *s2)
 	while (len1-- > 0)
 		fs[len1] = s1[len1];
 	if (s1)
-		free(s1);
+		free((void*)s1);
 	return (fs);
 }

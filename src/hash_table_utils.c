@@ -6,7 +6,7 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 10:20:12 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 14:42:29 by relaforg         ###   ########.fr       */
+/*   Updated: 2026/02/28 15:00:36 by secros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	increase_hashtable_size(t_hashtable **tab)
 	tmp = *tab;
 	i = 0;
 	new = init_hashtable(tmp->size * 2);
+	new->strategie = tmp->strategie;
 	if (new == NULL)
 		return ;
 	while (i < tmp->size)
