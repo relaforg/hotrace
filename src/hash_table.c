@@ -6,7 +6,7 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 09:42:41 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 10:24:39 by relaforg         ###   ########.fr       */
+/*   Updated: 2026/02/28 10:34:51 by relaforg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,31 +95,22 @@ void	delete_from_hashtable(t_hashtable **tab, char *key)
 {
 	t_hashtable	*tmp;
 	int			hashed_key;
-	t_node		*curr;
+	t_node		**curr;
 	t_node		*aux;
 
 	tmp = *tab;
 	hashed_key = hash(key, tmp->size);
-	curr = tmp->table[hashed_key];
+	curr = &tmp->table[hashed_key];
 	aux = NULL;
-	if (curr == NULL)
-		return ;
-	if (!strcmp(curr->key, key))
+	while (*curr)
 	{
-		aux = curr;
-		tmp->table[hashed_key] = curr->next;
-		free(aux);
-		return ;
-	}
-	while (curr->next != NULL)
-	{
-		if (!strcmp(curr->next->key, key))
+		if (!strcmp((*curr)->key, key))
 		{
-			aux = curr->next;
-			curr->next = curr->next->next;
+			aux = *curr;
+			*curr = aux->next;
 			free(aux);
 			return ;
 		}
-		curr = curr->next;
+		curr = &(*curr)->next;
 	}
 }

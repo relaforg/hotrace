@@ -7,7 +7,8 @@ MODE ?= release
 
 VPATH = src
 SRCS = main.c \
-	   hash_table.c
+	   hash_table.c \
+	   hash_table_utils.c
 
 OBJS = $(addprefix $(BUILD_DIR)/, $(SRCS:.c=.o))
 DEPS = $(OBJS:.o=.d)
