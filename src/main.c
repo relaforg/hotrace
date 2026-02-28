@@ -6,32 +6,42 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 10:15:29 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 10:40:27 by relaforg         ###   ########.fr       */
+/*   Updated: 2026/02/28 11:09:01 by relaforg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hash_table.h"
+#include "get_next_line.h"
+#include "stdio.h"
+
+size_t	ft_strlen(char *s)
+{
+	size_t	size;
+
+	if (!s)
+		return (0);
+	size = 0;
+	while (*(s + size))
+		size++;
+	return (size);
+}
 
 int	main(void)
 {
-	t_hashtable	*hashTable = init_hashtable(2);
+	char		*key;
+	char		*value;
+	t_hashtable	*hashtable;
 
-	insert(&hashTable, "test", 1);
-	insert(&hashTable, "test", 1);
-	insert(&hashTable, "testb", 2);
-	insert(&hashTable, "testc", 3);
-	insert(&hashTable, "testd", 4);
-	insert(&hashTable, "teste", 5);
-	insert(&hashTable, "testf", 6);
-	insert(&hashTable, "testg", 7);
-	insert(&hashTable, "testh", 8);
-
-	show_hashtable(hashTable);
-
-	delete_from_hashtable(&hashTable, "test");
-
-	show_hashtable(hashTable);
-
-	free_hashtable(hashTable);
+	hashtable = init_hashtable(256);
+	if (!hashtable)
+		return (1);
+	while (ft_strlen(key = get_next_line(0)) > 1)
+	{
+		value = get_next_line(0);
+		insert(&hashtable, key, value);
+		free(key);
+		free(value);
+	}
+	show_hashtable(hashtable);
 	return (0);
 }

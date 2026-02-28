@@ -6,7 +6,7 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 10:20:12 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 10:39:58 by relaforg         ###   ########.fr       */
+/*   Updated: 2026/02/28 11:06:03 by relaforg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	show_hashtable(t_hashtable *tab)
 		curr = (tab->table)[i];
 		while (curr != NULL)
 		{
-			printf("%s -> %d\n", curr->key, curr->value);
+			printf("%s -> %s\n", curr->key, curr->value);
 			curr = curr->next;
 		}
 		printf("\n");

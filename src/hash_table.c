@@ -6,7 +6,7 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 09:42:41 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 10:34:51 by relaforg         ###   ########.fr       */
+/*   Updated: 2026/02/28 11:04:50 by relaforg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_hashtable	*init_hashtable(int tableSize)
 	return (tab);
 }
 
-void	insert(t_hashtable **tab, char *key, int value)
+void	insert(t_hashtable **tab, char *key, char *value)
 {
 	t_hashtable	*tmp;
 	int			hashed_key;
@@ -68,7 +68,7 @@ void	insert(t_hashtable **tab, char *key, int value)
 		return ;
 	}
 	strcpy(new->key, key);
-	new->value = value;
+	memmove(new->value, value, 256);
 	new->next = tmp->table[hashed_key];
 	tmp->table[hashed_key] = new;
 	if (load_factor(tmp) >= UPPER_TRESHOLD)
