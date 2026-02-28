@@ -6,13 +6,13 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 13:27:20 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 13:27:41 by relaforg         ###   ########.fr       */
+/*   Updated: 2026/02/28 13:36:43 by secros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
 
-size_t	ft_strlen(char *s)
+size_t	ft_strlen(const char *s)
 {
 	size_t	size;
 

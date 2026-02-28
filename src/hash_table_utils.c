@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void	free_hashtable(t_hashtable *tab)
+void	free_hashtable(t_hashtable *tab, bool delete)
 {
 	t_node	*curr;
 	t_node	*aux;
@@ -28,6 +28,11 @@ void	free_hashtable(t_hashtable *tab)
 		{
 			aux = curr;
 			curr = curr->next;
+			if (delete)
+			{
+				free((void *)aux->key);
+				free((void *)aux->value);
+			}
 			free(aux);
 		}
 		i++;

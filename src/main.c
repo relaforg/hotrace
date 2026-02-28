@@ -12,6 +12,7 @@
 
 #include "hash_table.h"
 #include "get_next_line.h"
+#include "unistd.h"
 #include <unistd.h>
 #include "utils.h"
 
@@ -33,6 +34,8 @@ void	get_inputs(t_hashtable *hashtable)
 		}
 		else
 			insert(&hashtable, key, value);
+		// free(key);
+		// free(value);
 		free(key);
 		free(value);
 		key = get_next_line(0);
@@ -60,6 +63,7 @@ void	retrieve_data(t_hashtable *hashtable)
 		free(key);
 		key = get_next_line(0);
 	}
+	free_hashtable(hashtable, true);
 }
 
 int	main(void)
@@ -71,6 +75,6 @@ int	main(void)
 		return (1);
 	get_inputs(hashtable);
 	retrieve_data(hashtable);
-	free_hashtable(hashtable);
+	free_hashtable(hashtable, true);
 	return (0);
 }
