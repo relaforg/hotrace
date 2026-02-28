@@ -6,7 +6,7 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 09:42:41 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 14:24:54 by relaforg         ###   ########.fr       */
+/*   Updated: 2026/02/28 14:41:32 by relaforg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	insert(t_hashtable **tab, const char *key, const char *value)
 	new->value = value;
 	new->next = tmp->table[hashed_key];
 	tmp->table[hashed_key] = new;
+	tmp->el_nbr++;
 	if (load_factor(tmp) >= UPPER_TRESHOLD)
 		increase_hashtable_size(tab);
 }
@@ -119,4 +120,5 @@ void	delete_from_hashtable(t_hashtable **tab, const char *key)
 		}
 		curr = &(*curr)->next;
 	}
+	tmp->el_nbr--;
 }

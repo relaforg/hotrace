@@ -6,7 +6,7 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 10:18:53 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 13:22:34 by secros           ###   ########.fr       */
+/*   Updated: 2026/02/28 14:39:28 by relaforg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_hashtable
 {
 	t_node	**table;
 	int		size;
+	int		el_nbr;
 }	t_hashtable;
 
 int			hash(const char *str, int table_size);

@@ -6,7 +6,7 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 10:20:12 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 14:19:15 by relaforg         ###   ########.fr       */
+/*   Updated: 2026/02/28 14:42:29 by relaforg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,23 +43,7 @@ void	free_hashtable(t_hashtable *tab, bool delete)
 
 float	load_factor(t_hashtable *tab)
 {
-	int		i;
-	int		el_nbr;
-	t_node	*curr;
-
-	i = 0;
-	el_nbr = 0;
-	while (i < tab->size)
-	{
-		curr = tab->table[i];
-		while (curr != NULL)
-		{
-			el_nbr++;
-			curr = curr->next;
-		}
-		i++;
-	}
-	return ((float)el_nbr / (float)tab->size);
+	return ((float)tab->el_nbr / (float)tab->size);
 }
 
 void	increase_hashtable_size(t_hashtable **tab)
@@ -89,6 +73,7 @@ void	increase_hashtable_size(t_hashtable **tab)
 		}
 		i++;
 	}
+	new->el_nbr = tmp->el_nbr;
 	*tab = new;
 	free(tmp->table);
 	free(tmp);
