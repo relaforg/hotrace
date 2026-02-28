@@ -6,7 +6,7 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 09:42:41 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 17:24:15 by secros           ###   ########.fr       */
+/*   Updated: 2026/02/28 17:30:32 by secros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	insert(t_hashtable **tab, const char *key, const char *value)
 	t_node	*new;
 
 	new = malloc(sizeof(t_node));
-	if (new == NULL) 
+	if (new == NULL)
 	{
 		free((void *)key);
 		free((void *)value);
