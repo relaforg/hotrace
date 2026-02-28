@@ -1,115 +1,87 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hash_table.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/28 09:42:41 by relaforg          #+#    #+#             */
+/*   Updated: 2026/02/28 10:24:39 by relaforg         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "hash_table.h"
 #include <stdlib.h>
-#include <stdio.h>
 #include <string.h>
 
 int	hash(char *str, int tableSize)
 {
-	int	sum = 0;
+	int	sum;
 
+	sum = 0;
 	while (*str != 0)
 	{
 		sum += *str;
 		str++;
 	}
-
 	return (sum % tableSize);
 }
 
-HashTable	*initHashTable(int tableSize)
+t_hashtable	*init_hashtable(int tableSize)
 {
-	int	i = 0;
-	HashTable	*tab = malloc(sizeof(HashTable));
+	int			i;
+	t_hashtable	*tab;
+
+	i = 0;
+	tab = malloc(sizeof(t_hashtable));
 	if (tab == NULL)
 		return (NULL);
-
 	tab->size = tableSize;
-	tab->table = malloc(sizeof(Node*) * tableSize); 
+	tab->table = malloc(sizeof(t_node *) * tableSize);
 	if (tab->table == NULL)
 	{
 		free(tab);
 		return (NULL);
 	}
-
 	while (i < tableSize)
 	{
 		tab->table[i] = NULL;
 		i++;
 	}
-
 	return (tab);
 }
 
-void	freeHashTable(HashTable *tab)
+void	insert(t_hashtable **tab, char *key, int value)
 {
-	Node	*curr;
-	Node	*aux;
-	int		i = 0;
+	t_hashtable	*tmp;
+	int			hashed_key;
+	t_node		*new;
 
-	while (i < tab->size)
-	{
-		curr = (tab->table)[i];
-		while (curr != NULL)
-		{
-			aux = curr;
-			curr = curr->next;
-			free(aux);
-		}
-		i++;
-	}
-
-	free(tab->table);
-	free(tab);
-}
-
-void	showHashTable(HashTable *tab)
-{
-	Node	*curr;
-	int		i = 0;
-
-	while (i < tab->size)
-	{
-		printf("%d : \n", i);
-		curr = (tab->table)[i];
-		while (curr != NULL)
-		{
-			printf("%s -> %d\n", curr->key, curr->value);
-			curr = curr->next;
-		}
-		printf("\n");
-		i++;
-	}
-}
-
-void	insert(HashTable **tab, char *key, int value)
-{
-	HashTable	*tmp = *tab;
-	int		 	hashedKey = hash(key, tmp->size);
-	Node		*new = malloc(sizeof(Node));
+	tmp = *tab;
+	hashed_key = hash(key, tmp->size);
+	new = malloc(sizeof(t_node));
 	if (new == NULL)
 		return ;
-
 	if (search(tmp, key) != NULL)
 	{
 		free(new);
 		return ;
 	}
-
 	strcpy(new->key, key);
 	new->value = value;
-
-	new->next = tmp->table[hashedKey];
-	tmp->table[hashedKey] = new;
-
-	if (loadFactor(tmp) >= 0.75)
-		enhanceHashTableSize(tab);
+	new->next = tmp->table[hashed_key];
+	tmp->table[hashed_key] = new;
+	if (load_factor(tmp) >= UPPER_TRESHOLD)
+		increase_hashtable_size(tab);
 }
 
-Node	*search(HashTable *tab, char *key)
+t_node	*search(t_hashtable *tab, char *key)
 {
-	int		hashedKey = hash(key, tab->size);
-	Node	*curr = tab->table[hashedKey];
+	int		hashed_key;
+	t_node	*curr;
 
+	hashed_key = hash(key, tab->size);
+	curr = tab->table[hashed_key];
 	while (curr != NULL)
 	{
 		if (!strcmp(curr->key, key))
@@ -119,22 +91,24 @@ Node	*search(HashTable *tab, char *key)
 	return (NULL);
 }
 
-void	deleteFromHashTable(HashTable **tab, char *key)
+void	delete_from_hashtable(t_hashtable **tab, char *key)
 {
-	HashTable	*tmp = *tab;
-	int			hashedKey = hash(key, tmp->size);
-	Node		*curr = tmp->table[hashedKey];
-	Node		*aux = NULL;
+	t_hashtable	*tmp;
+	int			hashed_key;
+	t_node		*curr;
+	t_node		*aux;
 
+	tmp = *tab;
+	hashed_key = hash(key, tmp->size);
+	curr = tmp->table[hashed_key];
+	aux = NULL;
 	if (curr == NULL)
 		return ;
 	if (!strcmp(curr->key, key))
 	{
 		aux = curr;
-		tmp->table[hashedKey] = curr->next;
+		tmp->table[hashed_key] = curr->next;
 		free(aux);
-		if (loadFactor(tmp) <= 0.25)
-			shrinkHashTableSize(tab);
 		return ;
 	}
 	while (curr->next != NULL)
@@ -144,74 +118,8 @@ void	deleteFromHashTable(HashTable **tab, char *key)
 			aux = curr->next;
 			curr->next = curr->next->next;
 			free(aux);
-			if (loadFactor(tmp) <= 0.45)
-				shrinkHashTableSize(tab);
 			return ;
 		}
 		curr = curr->next;
 	}
-
-}
-
-float	loadFactor(HashTable *tab)
-{
-	int	i = 0;
-	int	usedRow = 0;
-
-	while (i < tab->size)
-	{
-		if (tab->table[i] != NULL)
-			usedRow++;
-		i++;
-	}
-	
-	return ((float)usedRow / (float)tab->size);
-}
-
-void    enhanceHashTableSize(HashTable **tab)
-{
-	HashTable	*new = NULL;
-	HashTable	*tmp = *tab;
-	int			i = 0;
-	Node		*curr;
-
-	new = initHashTable(tmp->size * 2);
-
-	while (i < tmp->size)
-	{
-		curr = tmp->table[i];
-		while (curr != NULL)
-		{
-			insert(&new, curr->key, curr->value);
-			curr = curr->next;
-		}
-		i++;
-	}
-
-	*tab = new;
-	freeHashTable(tmp);
-}
-
-void	shrinkHashTableSize(HashTable **tab)
-{
-	HashTable	*new = NULL;
-	HashTable	*tmp = *tab;
-	int			i = 0;
-	Node		*curr;
-
-	new = initHashTable(tmp->size / 2);
-
-	while (i < tmp->size)
-	{
-		curr = tmp->table[i];
-		while (curr != NULL)
-		{
-			insert(&new, curr->key, curr->value);
-			curr = curr->next;
-		}
-		i++;
-	}
-
-	*tab = new;
-	freeHashTable(tmp);
 }

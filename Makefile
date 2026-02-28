@@ -6,7 +6,8 @@ CFLAGS = -Werror -Wextra -Wall -MD $(INCLUDES)
 MODE ?= release
 
 VPATH = src
-SRCS = main.c
+SRCS = main.c \
+	   hash_table.c
 
 OBJS = $(addprefix $(BUILD_DIR)/, $(SRCS:.c=.o))
 DEPS = $(OBJS:.o=.d)
