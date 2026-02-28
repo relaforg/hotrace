@@ -6,7 +6,7 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 09:42:41 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 13:46:37 by relaforg         ###   ########.fr       */
+/*   Updated: 2026/02/28 14:01:26 by relaforg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ void	insert(t_hashtable **tab, const char *key, const char *value)
 	if (search(tmp, key) != NULL)
 	{
 		free(new);
+		free((void *) key);
+		free((void *) value);
 		return ;
 	}
 	new->key = key;

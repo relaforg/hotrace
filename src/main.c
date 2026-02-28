@@ -6,7 +6,7 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 10:15:29 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 13:46:14 by relaforg         ###   ########.fr       */
+/*   Updated: 2026/02/28 13:59:30 by relaforg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <unistd.h>
 #include "utils.h"
 
-void	get_inputs(t_hashtable *hashtable)
+void	get_inputs(t_hashtable **hashtable)
 {
 	char	*key;
 	char	*value;
@@ -33,13 +33,10 @@ void	get_inputs(t_hashtable *hashtable)
 			break ;
 		}
 		else
-			insert(&hashtable, key, value);
-		// free(key);
-		// free(value);
-		free(key);
-		free(value);
+			insert(hashtable, key, value);
 		key = get_next_line(0);
 	}
+	free(key);
 }
 
 void	retrieve_data(t_hashtable *hashtable)
@@ -63,17 +60,17 @@ void	retrieve_data(t_hashtable *hashtable)
 		free(key);
 		key = get_next_line(0);
 	}
-	free_hashtable(hashtable, true);
+	free(key);
 }
 
 int	main(void)
 {
 	t_hashtable	*hashtable;
 
-	hashtable = init_hashtable(1);
+	hashtable = init_hashtable(256);
 	if (!hashtable)
 		return (1);
-	get_inputs(hashtable);
+	get_inputs(&hashtable);
 	retrieve_data(hashtable);
 	free_hashtable(hashtable, true);
 	return (0);
