@@ -6,13 +6,14 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 10:15:29 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 13:59:30 by relaforg         ###   ########.fr       */
+/*   Updated: 2026/02/28 14:24:41 by relaforg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hash_table.h"
 #include "get_next_line.h"
 #include "unistd.h"
+#include <bits/floatn-common.h>
 #include <unistd.h>
 #include "utils.h"
 
@@ -67,7 +68,7 @@ int	main(void)
 {
 	t_hashtable	*hashtable;
 
-	hashtable = init_hashtable(256);
+	hashtable = init_hashtable(1);
 	if (!hashtable)
 		return (1);
 	get_inputs(&hashtable);

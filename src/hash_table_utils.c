@@ -6,7 +6,7 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 10:20:12 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 13:53:23 by relaforg         ###   ########.fr       */
+/*   Updated: 2026/02/28 14:19:15 by relaforg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	increase_hashtable_size(t_hashtable **tab)
 	t_hashtable	*tmp;
 	int			i;
 	t_node		*curr;
+	t_node		*aux;
 	int			index;
 
 	tmp = *tab;
@@ -81,9 +82,10 @@ void	increase_hashtable_size(t_hashtable **tab)
 		while (curr != NULL)
 		{
 			index = hash(curr->key, new->size);
+			aux = curr->next;
 			curr->next = new->table[index];
 			new->table[index] = curr;
-			curr = curr->next;
+			curr = aux;
 		}
 		i++;
 	}
