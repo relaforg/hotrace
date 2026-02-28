@@ -6,20 +6,20 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 09:42:41 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 13:31:47 by secros           ###   ########.fr       */
+/*   Updated: 2026/02/28 13:36:09 by secros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hash_table.h"
+#include "utils.h"
 #include <stdlib.h>
 #include <string.h>
 
-const size_t fnv_offset = 0xcbf29ce484222325;
-const size_t fnv_prime = 0x100000001b3;
-
-int hash(const char* str, int table_size)
+int	hash(const char *str, int table_size)
 {
-	size_t	hash;
+	size_t			hash;
+	const size_t	fnv_offset = 0xcbf29ce484222325;
+	const size_t	fnv_prime = 0x100000001b3;
 
 	hash = fnv_offset;
 	while (*str && *str != '\n')
@@ -28,7 +28,7 @@ int hash(const char* str, int table_size)
 		hash ^= *str;
 		str++;
 	}
-	return (hash % table_size); 
+	return (hash % table_size);
 }
 
 t_hashtable	*init_hashtable(int table_size)
@@ -88,7 +88,7 @@ t_node	*search(t_hashtable *tab, const char *key)
 	curr = tab->table[hashed_key];
 	while (curr != NULL)
 	{
-		if (!strcmp(curr->key, key))
+		if (!ft_strcmp(curr->key, key))
 			return (curr);
 		curr = curr->next;
 	}
@@ -108,7 +108,7 @@ void	delete_from_hashtable(t_hashtable **tab, const char *key)
 	aux = NULL;
 	while (*curr)
 	{
-		if (!strcmp((*curr)->key, key))
+		if (!ft_strcmp((*curr)->key, key))
 		{
 			aux = *curr;
 			*curr = aux->next;

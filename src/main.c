@@ -6,25 +6,15 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 10:15:29 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 13:33:38 by secros           ###   ########.fr       */
+/*   Updated: 2026/02/28 13:37:21 by secros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hash_table.h"
 #include "get_next_line.h"
 #include "unistd.h"
-
-size_t	ft_strlen(const char *s)
-{
-	size_t	size;
-
-	if (!s)
-		return (0);
-	size = 0;
-	while (*(s + size))
-		size++;
-	return (size);
-}
+#include <unistd.h>
+#include "utils.h"
 
 void	get_inputs(t_hashtable *hashtable)
 {
