@@ -6,7 +6,7 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 09:42:41 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 17:30:32 by secros           ###   ########.fr       */
+/*   Updated: 2026/02/28 19:22:23 by secros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <string.h>
 #include "get_next_line.h"
 
-int	hash(const char *str, int table_size)
+size_t	hash(const char *str)
 {
 	uint64_t			hash;
 	const uint64_t		fnv_offset = 0xcbf29ce484222325;
@@ -30,7 +30,7 @@ int	hash(const char *str, int table_size)
 		hash ^= *str;
 		str++;
 	}
-	return (hash % table_size);
+	return (hash);
 }
 
 t_hashtable	*init_hashtable(int table_size)
@@ -45,16 +45,11 @@ t_hashtable	*init_hashtable(int table_size)
 	tab->size = table_size;
 	tab->el_nbr = 0;
 	tab->strategie = DEFAULT;
-	tab->table = malloc(sizeof(t_node *) * table_size);
+	tab->table = ft_calloc(sizeof(t_node *) * table_size);
 	if (tab->table == NULL)
 	{
 		free(tab);
 		return (NULL);
-	}
-	while (i < table_size)
-	{
-		tab->table[i] = NULL;
-		i++;
 	}
 	return (tab);
 }
@@ -72,6 +67,7 @@ void	insert(t_hashtable **tab, const char *key, const char *value)
 	}
 	new->key = key;
 	new->value = value;
+	new->hash = hash(key);
 	if (smart_insert(tab, new) == NULL)
 	{
 		(*tab)->el_nbr--;
@@ -81,16 +77,14 @@ void	insert(t_hashtable **tab, const char *key, const char *value)
 		increase_hashtable_size(tab);
 }
 
-t_node	*search(t_hashtable *tab, const char *key)
+t_node	*search(t_hashtable *tab, const char *key, size_t hashed_key)
 {
-	int		hashed_key;
 	t_node	*curr;
 
-	hashed_key = hash(key, tab->size);
-	curr = tab->table[hashed_key];
+	curr = tab->table[hashed_key & (tab->size -1)];
 	while (curr != NULL)
 	{
-		if (!ft_strcmp(curr->key, key))
+		if (hashed_key == curr->hash && !ft_fstrcmp(curr->key, key))
 			return (curr);
 		curr = curr->next;
 	}

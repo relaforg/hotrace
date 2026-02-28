@@ -6,21 +6,23 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 10:18:53 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 17:15:30 by secros           ###   ########.fr       */
+/*   Updated: 2026/02/28 20:00:31 by secros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef HASH_TABLE_H
 # define HASH_TABLE_H
 
-# define UPPER_TRESHOLD 0.8
-
 # include <stdbool.h>
+# include <stddef.h>
+
+# define UPPER_TRESHOLD 0.8
 
 typedef struct s_node
 {
 	const char		*key;
 	const char		*value;
+	size_t			hash;
 	struct s_node	*next;
 }	t_node;
 
@@ -39,12 +41,12 @@ typedef struct s_hashtable
 	int				el_nbr;
 }	t_hashtable;
 
-int			hash(const char *str, int table_size);
+size_t		hash(const char *str);
 t_hashtable	*init_hashtable(int table_size);
 void		free_hashtable(t_hashtable *tab, bool delete);
 void		show_hashtable(t_hashtable *tab);
 void		insert(t_hashtable **tab, const char *key, const char *value);
-t_node		*search(t_hashtable *tab, const char *key);
+t_node		*search(t_hashtable *tab, const char *key, size_t hashed_key);
 void		delete_from_hashtable(t_hashtable **tab, const char *key);
 float		load_factor(t_hashtable *tab);
 void		increase_hashtable_size(t_hashtable **tab);

@@ -6,7 +6,7 @@
 /*   By: secros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 16:48:21 by secros            #+#    #+#             */
-/*   Updated: 2026/02/28 16:48:23 by secros           ###   ########.fr       */
+/*   Updated: 2026/02/28 19:18:29 by secros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,24 +53,25 @@ void	*strategie_concat(t_node *curr, t_node *new)
 void	*smart_insert(t_hashtable **tab, t_node *new)
 {
 	t_node		*curr;
-	const int	hashed_key = hash(new->key, (*tab)->size);
+	int			index;
 	void		*(*strategie[3])(t_node *, t_node *);
 
 	strategie[DEFAULT] = strategie_default;
 	strategie[REPLACE] = strategie_replace;
 	strategie[CONCAT] = strategie_concat;
-	curr = search(*tab, new->key);
+	index = new->hash & ((*tab)->size - 1);
+	curr = search(*tab, new->key, new->hash);
 	if (!curr)
 	{
-		new->next = (*tab)->table[hashed_key];
-		(*tab)->table[hashed_key] = new;
+		new->next = (*tab)->table[index];
+		(*tab)->table[index] = new;
 		(*tab)->el_nbr++;
 		return (new);
 	}
 	if (strategie[(*tab)->strategie](curr, new) == NULL)
 	{
 		(*tab)->el_nbr--;
-		(*tab)->table[hashed_key] = NULL;
+		(*tab)->table[index] = NULL;
 		return (NULL);
 	}
 	return (curr);

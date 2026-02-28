@@ -6,7 +6,7 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 10:20:12 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 15:00:36 by secros           ###   ########.fr       */
+/*   Updated: 2026/02/28 19:24:58 by secros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	move_table(t_hashtable *old, t_hashtable *new)
 		curr = old->table[i];
 		while (curr != NULL)
 		{
-			index = hash(curr->key, new->size);
+			index = curr->hash & (new->size - 1);
 			aux = curr->next;
 			curr->next = new->table[index];
 			new->table[index] = curr;

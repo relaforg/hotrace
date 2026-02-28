@@ -6,7 +6,7 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 10:15:29 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 17:46:08 by secros           ###   ########.fr       */
+/*   Updated: 2026/02/28 20:00:15 by secros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <unistd.h>
 #include "utils.h"
 
-#define SIZE 8144
+#define SIZE 65536
 
 void	get_inputs(t_hashtable **hashtable)
 {
@@ -50,7 +50,7 @@ void	retrieve_data(t_hashtable *hashtable)
 	key = get_next_line(0);
 	while (ft_strlen(key) > 0)
 	{
-		node = search(hashtable, key);
+		node = search(hashtable, key, hash(key));
 		write(1, key, ft_strlen(key));
 		write(1, ": ", 2);
 		if (!node)
@@ -66,6 +66,23 @@ void	retrieve_data(t_hashtable *hashtable)
 	free(key);
 }
 
+// void	debug(t_hashtable *tab)
+// {
+// 	int	j;
+// 	int	i;
+//
+// 	i = 0;
+// 	j = 0;
+// 	while (i < tab->size)
+// 	{
+// 		if (tab->table[i])
+// 			j++;
+// 		i++;
+// 	}
+// 	__builtin_printf("DEBUG: %d element\nDEBUG %d el_nbr\nLoad factor: %f\n",
+// 	j, tab->el_nbr,(float) tab->el_nbr / j);
+// }
+
 int	main(void)
 {
 	t_hashtable	*hashtable;
@@ -73,7 +90,7 @@ int	main(void)
 	hashtable = init_hashtable(SIZE);
 	if (!hashtable)
 		return (1);
-	hashtable_set_strategie(&hashtable, CONCAT);
+	hashtable_set_strategie(&hashtable, REPLACE);
 	get_inputs(&hashtable);
 	retrieve_data(hashtable);
 	free_hashtable(hashtable, true);
