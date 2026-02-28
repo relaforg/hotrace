@@ -2,7 +2,7 @@ CC := cc
 NAME := hotrace
 BUILD_DIR := .build
 INCLUDES = -Ilibft/includes -Iincludes
-CFLAGS = -Werror -Wextra -Wall -MD $(INCLUDES) -O3
+CFLAGS = -Wall -Wextra -Werror -MD $(INCLUDES) -O3
 MODE ?= release
 
 VPATH = src
