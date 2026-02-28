@@ -6,7 +6,7 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 10:18:53 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 15:28:59 by secros           ###   ########.fr       */
+/*   Updated: 2026/02/28 16:47:07 by secros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,6 @@ void		delete_from_hashtable(t_hashtable **tab, const char *key);
 float		load_factor(t_hashtable *tab);
 void		increase_hashtable_size(t_hashtable **tab);
 void		hashtable_set_strategie(t_hashtable **tab, enum e_collide opt);
+void		*smart_insert(t_hashtable **tab, t_node *new);
 
 #endif

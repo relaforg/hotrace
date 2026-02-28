@@ -9,6 +9,7 @@ VPATH = src
 SRCS = main.c \
 	   hash_table.c \
 	   hash_table_utils.c \
+	   hash_table_mods.c \
 	   get_next_line.c \
 	   get_next_line_utils.c \
 	   ft_strlen.c \
