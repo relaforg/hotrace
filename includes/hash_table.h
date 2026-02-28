@@ -15,7 +15,7 @@
 
 # define UPPER_TRESHOLD 0.8
 
-#include <stdbool.h>
+# include <stdbool.h>
 
 typedef struct s_node
 {

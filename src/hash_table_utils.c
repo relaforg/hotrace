@@ -46,24 +46,17 @@ float	load_factor(t_hashtable *tab)
 	return ((float)tab->el_nbr / (float)tab->size);
 }
 
-void	increase_hashtable_size(t_hashtable **tab)
+void	move_table(t_hashtable *old, t_hashtable *new)
 {
-	t_hashtable	*new;
-	t_hashtable	*tmp;
 	int			i;
 	t_node		*curr;
 	t_node		*aux;
 	int			index;
 
-	tmp = *tab;
 	i = 0;
-	new = init_hashtable(tmp->size * 2);
-	new->strategie = tmp->strategie;
-	if (new == NULL)
-		return ;
-	while (i < tmp->size)
+	while (i < old->size)
 	{
-		curr = tmp->table[i];
+		curr = old->table[i];
 		while (curr != NULL)
 		{
 			index = hash(curr->key, new->size);
@@ -74,6 +67,18 @@ void	increase_hashtable_size(t_hashtable **tab)
 		}
 		i++;
 	}
+}
+
+void	increase_hashtable_size(t_hashtable **tab)
+{
+	t_hashtable	*new;
+	t_hashtable	*tmp;
+
+	tmp = *tab;
+	new = init_hashtable(tmp->size * 2);
+	if (new == NULL)
+		return ;
+	move_table(tmp, new);
 	new->el_nbr = tmp->el_nbr;
 	*tab = new;
 	free(tmp->table);

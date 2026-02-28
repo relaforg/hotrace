@@ -6,7 +6,7 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 09:42:41 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 16:09:34 by secros           ###   ########.fr       */
+/*   Updated: 2026/02/28 16:38:01 by secros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,31 +181,6 @@ t_node	*search(t_hashtable *tab, const char *key)
 		curr = curr->next;
 	}
 	return (NULL);
-}
-
-void	delete_from_hashtable(t_hashtable **tab, const char *key)
-{
-	t_hashtable	*tmp;
-	int			hashed_key;
-	t_node		**curr;
-	t_node		*aux;
-
-	tmp = *tab;
-	hashed_key = hash(key, tmp->size);
-	curr = &tmp->table[hashed_key];
-	aux = NULL;
-	while (*curr)
-	{
-		if (!ft_strcmp((*curr)->key, key))
-		{
-			aux = *curr;
-			*curr = aux->next;
-			free(aux);
-			return ;
-		}
-		curr = &(*curr)->next;
-	}
-	tmp->el_nbr--;
 }
 
 void	hashtable_set_strategie(t_hashtable **tab, enum e_collide opt)
