@@ -6,7 +6,7 @@
 /*   By: secros <secros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 13:46:03 by secros            #+#    #+#             */
-/*   Updated: 2026/02/28 10:46:56 by relaforg         ###   ########.fr       */
+/*   Updated: 2026/02/28 11:22:46 by relaforg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*build_line(char *str, char *buff)
 		i++;
 	}
 	if (buff[i] == '\n')
-		end[i++] = '\n';
+		end[i++] = '\0';
 	end[i] = '\0';
 	fs = ft_strfreejoin(str, end);
 	free(end);

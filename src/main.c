@@ -6,7 +6,7 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 10:15:29 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 11:09:01 by relaforg         ###   ########.fr       */
+/*   Updated: 2026/02/28 11:23:43 by relaforg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	main(void)
 	char		*key;
 	char		*value;
 	t_hashtable	*hashtable;
+	t_node		*node;
 
 	hashtable = init_hashtable(256);
 	if (!hashtable)
@@ -42,6 +43,16 @@ int	main(void)
 		free(key);
 		free(value);
 	}
-	show_hashtable(hashtable);
+	while (ft_strlen(key = get_next_line(0)) > 1)
+	{
+		node = search(hashtable, key);
+		printf("%s: ", key);
+		if (!node)
+			printf("Not Found\n");
+		else
+			printf("%s\n", node->value);
+		free(key);
+	}
+	free_hashtable(hashtable);
 	return (0);
 }

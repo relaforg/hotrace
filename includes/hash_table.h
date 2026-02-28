@@ -6,7 +6,7 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 10:18:53 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 11:05:44 by relaforg         ###   ########.fr       */
+/*   Updated: 2026/02/28 11:13:18 by relaforg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ typedef struct s_hashtable
 	int		size;
 }	t_hashtable;
 
-int			hash(char *str, int tableSize);
-t_hashtable	*init_hashtable(int tableSize);
+int			hash(const char *str, int table_size);
+t_hashtable	*init_hashtable(int table_size);
 void		free_hashtable(t_hashtable *tab);
 void		show_hashtable(t_hashtable *tab);
 void		insert(t_hashtable **tab, char *key, char *value);

@@ -6,7 +6,7 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 09:42:41 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 11:04:50 by relaforg         ###   ########.fr       */
+/*   Updated: 2026/02/28 11:14:38 by relaforg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,24 @@
 #include <stdlib.h>
 #include <string.h>
 
-int	hash(char *str, int tableSize)
-{
-	int	sum;
+const size_t fnv_offset = 0xcbf29ce484222325;
+const size_t fnv_prime = 0x100000001b3;
 
-	sum = 0;
-	while (*str != 0)
+int hash(const char* str, int table_size)
+{
+	size_t	hash;
+
+	hash = fnv_offset;
+	while (*str && *str != '\n')
 	{
-		sum += *str;
+		hash *= fnv_prime;
+		hash ^= *str;
 		str++;
 	}
-	return (sum % tableSize);
+	return (hash % table_size); 
 }
 
-t_hashtable	*init_hashtable(int tableSize)
+t_hashtable	*init_hashtable(int table_size)
 {
 	int			i;
 	t_hashtable	*tab;
@@ -36,14 +40,14 @@ t_hashtable	*init_hashtable(int tableSize)
 	tab = malloc(sizeof(t_hashtable));
 	if (tab == NULL)
 		return (NULL);
-	tab->size = tableSize;
-	tab->table = malloc(sizeof(t_node *) * tableSize);
+	tab->size = table_size;
+	tab->table = malloc(sizeof(t_node *) * table_size);
 	if (tab->table == NULL)
 	{
 		free(tab);
 		return (NULL);
 	}
-	while (i < tableSize)
+	while (i < table_size)
 	{
 		tab->table[i] = NULL;
 		i++;
