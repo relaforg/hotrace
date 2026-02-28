@@ -98,28 +98,3 @@ t_node	*search(t_hashtable *tab, const char *key)
 	}
 	return (NULL);
 }
-
-void	delete_from_hashtable(t_hashtable **tab, const char *key)
-{
-	t_hashtable	*tmp;
-	int			hashed_key;
-	t_node		**curr;
-	t_node		*aux;
-
-	tmp = *tab;
-	hashed_key = hash(key, tmp->size);
-	curr = &tmp->table[hashed_key];
-	aux = NULL;
-	while (*curr)
-	{
-		if (!ft_strcmp((*curr)->key, key))
-		{
-			aux = *curr;
-			*curr = aux->next;
-			free(aux);
-			return ;
-		}
-		curr = &(*curr)->next;
-	}
-	tmp->el_nbr--;
-}
