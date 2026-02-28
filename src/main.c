@@ -6,7 +6,7 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 10:15:29 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 16:54:41 by secros           ###   ########.fr       */
+/*   Updated: 2026/02/28 17:25:38 by secros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include <bits/floatn-common.h>
 #include <unistd.h>
 #include "utils.h"
+
+#define SIZE 8144
 
 void	get_inputs(t_hashtable **hashtable)
 {
@@ -30,7 +32,8 @@ void	get_inputs(t_hashtable **hashtable)
 		{
 			write(2, "Value cannot be empty\n", 22);
 			free(value);
-			break ;
+			free(key);
+			key = NULL;
 		}
 		else
 			insert(hashtable, key, value);
@@ -67,10 +70,10 @@ int	main(void)
 {
 	t_hashtable	*hashtable;
 
-	hashtable = init_hashtable(1);
-	hashtable_set_strategie(&hashtable, DEFAULT);
+	hashtable = init_hashtable(SIZE);
 	if (!hashtable)
 		return (1);
+	hashtable_set_strategie(&hashtable, DEFAULT);
 	get_inputs(&hashtable);
 	retrieve_data(hashtable);
 	free_hashtable(hashtable, true);
