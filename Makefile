@@ -10,7 +10,10 @@ SRCS = main.c \
 	   hash_table.c \
 	   hash_table_utils.c \
 	   get_next_line.c \
-	   get_next_line_utils.c
+	   get_next_line_utils.c \
+	   ft_strlen.c \
+	   ft_strcpy.c \
+	   ft_strcmp.c
 
 OBJS = $(addprefix $(BUILD_DIR)/, $(SRCS:.c=.o))
 DEPS = $(OBJS:.o=.d)
