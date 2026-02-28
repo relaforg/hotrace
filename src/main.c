@@ -6,7 +6,7 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 10:15:29 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 11:23:43 by relaforg         ###   ########.fr       */
+/*   Updated: 2026/02/28 11:53:31 by relaforg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,15 @@ int	main(void)
 	while (ft_strlen(key = get_next_line(0)) > 1)
 	{
 		value = get_next_line(0);
-		insert(&hashtable, key, value);
+		if (*value)
+		{
+			dprintf(2, "Value for %s cannot be empty\n", value);
+			free(key);
+			free(value);
+			break;
+		}
+		else
+			insert(&hashtable, key, value);
 		free(key);
 		free(value);
 	}
