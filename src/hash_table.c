@@ -6,7 +6,7 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 09:42:41 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 11:14:38 by relaforg         ###   ########.fr       */
+/*   Updated: 2026/02/28 13:18:05 by secros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ t_hashtable	*init_hashtable(int table_size)
 	return (tab);
 }
 
-void	insert(t_hashtable **tab, char *key, char *value)
+void	insert(t_hashtable **tab, const char *key, const char *value)
 {
 	t_hashtable	*tmp;
 	int			hashed_key;
@@ -71,15 +71,15 @@ void	insert(t_hashtable **tab, char *key, char *value)
 		free(new);
 		return ;
 	}
-	strcpy(new->key, key);
-	memmove(new->value, value, 256);
+	new->key = key;
+	new->value = value;
 	new->next = tmp->table[hashed_key];
 	tmp->table[hashed_key] = new;
 	if (load_factor(tmp) >= UPPER_TRESHOLD)
 		increase_hashtable_size(tab);
 }
 
-t_node	*search(t_hashtable *tab, char *key)
+t_node	*search(t_hashtable *tab, const char *key)
 {
 	int		hashed_key;
 	t_node	*curr;
@@ -95,7 +95,7 @@ t_node	*search(t_hashtable *tab, char *key)
 	return (NULL);
 }
 
-void	delete_from_hashtable(t_hashtable **tab, char *key)
+void	delete_from_hashtable(t_hashtable **tab, const char *key)
 {
 	t_hashtable	*tmp;
 	int			hashed_key;

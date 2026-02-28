@@ -6,7 +6,7 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 10:18:53 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 11:13:18 by relaforg         ###   ########.fr       */
+/*   Updated: 2026/02/28 13:22:34 by secros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,12 @@
 
 # define UPPER_TRESHOLD 0.8
 
+#include <stdbool.h>
+
 typedef struct s_node
 {
-	char			key[256];
-	char			value[256];
+	const char		*key;
+	const char		*value;
 	struct s_node	*next;
 }	t_node;
 
@@ -30,11 +32,11 @@ typedef struct s_hashtable
 
 int			hash(const char *str, int table_size);
 t_hashtable	*init_hashtable(int table_size);
-void		free_hashtable(t_hashtable *tab);
+void		free_hashtable(t_hashtable *tab, bool delete);
 void		show_hashtable(t_hashtable *tab);
-void		insert(t_hashtable **tab, char *key, char *value);
-t_node		*search(t_hashtable *tab, char *key);
-void		delete_from_hashtable(t_hashtable **tab, char *key);
+void		insert(t_hashtable **tab, const char *key, const char *value);
+t_node		*search(t_hashtable *tab, const char *key);
+void		delete_from_hashtable(t_hashtable **tab, const char *key);
 float		load_factor(t_hashtable *tab);
 void		increase_hashtable_size(t_hashtable **tab);
 

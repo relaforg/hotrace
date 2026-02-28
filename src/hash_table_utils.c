@@ -6,7 +6,7 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 10:20:12 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 11:06:03 by relaforg         ###   ########.fr       */
+/*   Updated: 2026/02/28 13:22:40 by secros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void	free_hashtable(t_hashtable *tab)
+void	free_hashtable(t_hashtable *tab, bool delete)
 {
 	t_node	*curr;
 	t_node	*aux;
@@ -28,6 +28,11 @@ void	free_hashtable(t_hashtable *tab)
 		{
 			aux = curr;
 			curr = curr->next;
+			if (delete)
+			{
+				free((void *)aux->key);
+				free((void *)aux->value);
+			}
 			free(aux);
 		}
 		i++;
@@ -100,5 +105,5 @@ void	increase_hashtable_size(t_hashtable **tab)
 		i++;
 	}
 	*tab = new;
-	free_hashtable(tmp);
+	free_hashtable(tmp, false);
 }
