@@ -6,7 +6,7 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 10:15:29 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 16:34:43 by secros           ###   ########.fr       */
+/*   Updated: 2026/02/28 16:54:41 by secros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	get_inputs(t_hashtable **hashtable)
 		if (!value)
 		{
 			write(2, "Value cannot be empty\n", 22);
-			free(key);
 			free(value);
 			break ;
 		}

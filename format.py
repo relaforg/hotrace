@@ -1,6 +1,7 @@
 import csv
 import sys
 
+csv.field_size_limit(sys.maxsize)
 if len(sys.argv) != 3:
     print("Usage: python format_dict.py input.csv output.txt")
     sys.exit(1)
