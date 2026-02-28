@@ -6,15 +6,15 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 10:15:29 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 13:22:45 by secros           ###   ########.fr       */
+/*   Updated: 2026/02/28 13:33:38 by secros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hash_table.h"
 #include "get_next_line.h"
-#include "stdio.h"
+#include "unistd.h"
 
-size_t	ft_strlen(char *s)
+size_t	ft_strlen(const char *s)
 {
 	size_t	size;
 
@@ -26,41 +26,65 @@ size_t	ft_strlen(char *s)
 	return (size);
 }
 
-int	main(void)
+void	get_inputs(t_hashtable *hashtable)
 {
-	char		*key;
-	char		*value;
-	t_hashtable	*hashtable;
-	t_node		*node;
+	char	*key;
+	char	*value;
 
-	hashtable = init_hashtable(256);
-	if (!hashtable)
-		return (1);
-	while (ft_strlen(key = get_next_line(0)) > 0)
+	key = get_next_line(0);
+	while (ft_strlen(key) > 0)
 	{
 		value = get_next_line(0);
 		if (!value)
 		{
-			dprintf(2, "Value for %s cannot be empty\n", value);
+			write(2, "Value cannot be empty\n", 22);
 			free(key);
 			free(value);
-			break;
+			break ;
 		}
 		else
 			insert(&hashtable, key, value);
 		// free(key);
 		// free(value);
+		free(key);
+		free(value);
+		key = get_next_line(0);
 	}
-	while (ft_strlen(key = get_next_line(0)) > 0)
+}
+
+void	retrieve_data(t_hashtable *hashtable)
+{
+	char	*key;
+	t_node	*node;
+
+	key = get_next_line(0);
+	while (ft_strlen(key) > 0)
 	{
 		node = search(hashtable, key);
-		printf("%s: ", key);
+		write(1, key, ft_strlen(key));
+		write(1, ": ", 2);
 		if (!node)
-			printf("Not Found\n");
+			write(1, "Not Found\n", 11);
 		else
-			printf("%s\n", node->value);
+		{
+			write(1, node->value, ft_strlen(node->value));
+			write(1, "\n", 1);
+		}
 		free(key);
+		key = get_next_line(0);
 	}
+	free_hashtable(hashtable, true);
+}
+
+int	main(void)
+{
+	t_hashtable	*hashtable;
+
+	hashtable = init_hashtable(256);
+	if (!hashtable)
+		return (1);
+	get_inputs(hashtable);
+	retrieve_data(hashtable);
 	free_hashtable(hashtable, true);
 	return (0);
 }

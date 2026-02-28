@@ -6,7 +6,7 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 10:20:12 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 13:22:40 by secros           ###   ########.fr       */
+/*   Updated: 2026/02/28 13:35:18 by secros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,26 +39,6 @@ void	free_hashtable(t_hashtable *tab, bool delete)
 	}
 	free(tab->table);
 	free(tab);
-}
-
-void	show_hashtable(t_hashtable *tab)
-{
-	t_node	*curr;
-	int		i;
-
-	i = 0;
-	while (i < tab->size)
-	{
-		printf("%d : \n", i);
-		curr = (tab->table)[i];
-		while (curr != NULL)
-		{
-			printf("%s -> %s\n", curr->key, curr->value);
-			curr = curr->next;
-		}
-		printf("\n");
-		i++;
-	}
 }
 
 float	load_factor(t_hashtable *tab)
