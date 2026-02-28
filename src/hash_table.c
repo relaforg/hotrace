@@ -41,6 +41,7 @@ t_hashtable	*init_hashtable(int table_size)
 	if (tab == NULL)
 		return (NULL);
 	tab->size = table_size;
+	tab->el_nbr = 0;
 	tab->table = malloc(sizeof(t_node *) * table_size);
 	if (tab->table == NULL)
 	{
