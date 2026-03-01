@@ -6,13 +6,12 @@
 /*   By: secros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 16:48:21 by secros            #+#    #+#             */
-/*   Updated: 2026/02/28 19:18:29 by secros           ###   ########.fr       */
+/*   Updated: 2026/03/01 10:36:01 by secros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hash_table.h"
 #include "get_next_line.h"
-#include <stdlib.h>
 
 void	delete_node(t_node *node)
 {
@@ -43,10 +42,7 @@ void	*strategie_concat(t_node *curr, t_node *new)
 		curr->value = ft_strfreejoin(curr->value, new->value);
 	delete_node(new);
 	if (!curr->value)
-	{
-		delete_node(curr);
 		return (NULL);
-	}
 	return (curr);
 }
 
@@ -71,7 +67,8 @@ void	*smart_insert(t_hashtable **tab, t_node *new)
 	if (strategie[(*tab)->strategie](curr, new) == NULL)
 	{
 		(*tab)->el_nbr--;
-		(*tab)->table[index] = NULL;
+		(*tab)->table[index] = curr->next;
+		delete_node(curr);
 		return (NULL);
 	}
 	return (curr);

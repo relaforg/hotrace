@@ -6,13 +6,12 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 10:20:12 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 19:24:58 by secros           ###   ########.fr       */
+/*   Updated: 2026/03/01 10:36:32 by secros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hash_table.h"
 #include <stdlib.h>
-#include <stdio.h>
 
 void	free_hashtable(t_hashtable *tab, bool delete)
 {
@@ -78,6 +77,7 @@ void	increase_hashtable_size(t_hashtable **tab)
 	new = init_hashtable(tmp->size * 2);
 	if (new == NULL)
 		return ;
+	new->strategie = tmp->strategie;
 	move_table(tmp, new);
 	new->el_nbr = tmp->el_nbr;
 	*tab = new;

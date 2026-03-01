@@ -6,20 +6,17 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 10:15:29 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 20:00:15 by secros           ###   ########.fr       */
+/*   Updated: 2026/03/01 10:36:55 by secros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hash_table.h"
 #include "get_next_line.h"
-#include "unistd.h"
-#include <bits/floatn-common.h>
-#include <unistd.h>
 #include "utils.h"
 
 #define SIZE 65536
 
-void	get_inputs(t_hashtable **hashtable)
+static inline void	get_inputs(t_hashtable **hashtable)
 {
 	char	*key;
 	char	*value;
@@ -66,22 +63,22 @@ void	retrieve_data(t_hashtable *hashtable)
 	free(key);
 }
 
-// void	debug(t_hashtable *tab)
-// {
-// 	int	j;
-// 	int	i;
-//
-// 	i = 0;
-// 	j = 0;
-// 	while (i < tab->size)
-// 	{
-// 		if (tab->table[i])
-// 			j++;
-// 		i++;
-// 	}
-// 	__builtin_printf("DEBUG: %d element\nDEBUG %d el_nbr\nLoad factor: %f\n",
-// 	j, tab->el_nbr,(float) tab->el_nbr / j);
-// }
+void	debug(t_hashtable *tab)
+{
+	int	j;
+	int	i;
+
+	i = 0;
+	j = 0;
+	while (i < tab->size)
+	{
+		if (tab->table[i])
+			j++;
+		i++;
+	}
+	__builtin_printf("DEBUG: %d element\nDEBUG %d el_nbr\nLoad factor: %f\n",
+		j, tab->el_nbr, (float) tab->el_nbr / j);
+}
 
 int	main(void)
 {
@@ -93,6 +90,7 @@ int	main(void)
 	hashtable_set_strategie(&hashtable, REPLACE);
 	get_inputs(&hashtable);
 	retrieve_data(hashtable);
+	debug(hashtable);
 	free_hashtable(hashtable, true);
 	return (0);
 }

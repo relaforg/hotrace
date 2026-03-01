@@ -6,7 +6,7 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 09:42:41 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 19:22:23 by secros           ###   ########.fr       */
+/*   Updated: 2026/03/01 10:35:28 by secros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 #include "utils.h"
 #include <stdint.h>
 #include <stdlib.h>
-#include <string.h>
-#include "get_next_line.h"
 
 size_t	hash(const char *str)
 {
@@ -26,8 +24,8 @@ size_t	hash(const char *str)
 	hash = fnv_offset;
 	while (*str && *str != '\n')
 	{
-		hash *= fnv_prime;
 		hash ^= *str;
+		hash *= fnv_prime;
 		str++;
 	}
 	return (hash);

@@ -89,12 +89,18 @@ void	*ft_calloc(size_t size)
 /*   By: relaforg <relaforg@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 13:31:31 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 19:06:53 by secros           ###   ########.fr       */
+/*   Updated: 2026/02/28 19:59:34 by secros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdint.h>
 #include <stdlib.h>
+
+#define S1	0
+#define S2	1
+#define B0	2
+#define HIGH_BYTE	0x8080808080808080
+#define LOW_BYTE	0x0101010101010101
 
 int	ft_strcmp(const char *s1, const char *s2)
 {
@@ -108,42 +114,55 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
-int ft_fstrcmp(const char *s1, const char *s2)
+int	end_buffer(const char *c1, const char *c2)
 {
-	uint64_t	*w1;
-	uint64_t	*w2;
+	int	i;
+
+	i = 0;
+	while (i++ < 8)
+	{
+		if (*c1 != *c2 || *c1 == '\0')
+			return ((unsigned char) *c1 - (unsigned char) *c2);
+		c1++;
+		c2++;
+	}
+	return (0);
+}
+
+int	uint64_strcmp(uint64_t *w1, uint64_t *w2)
+{
 	uint64_t	val1;
 	uint64_t	val2;
 	uint64_t	null_byte;
+	char		*c1;
+	char		*c2;
 
-	while ((uintptr_t)s1 & 7) {
+	while (1)
+	{
+		val1 = *w1;
+		val2 = *w2;
+		null_byte = ((val1 - LOW_BYTE) & ~val1 & HIGH_BYTE);
+		if (null_byte || val1 != val2)
+		{
+			c1 = (char *)w1;
+			c2 = (char *)w2;
+			return (end_buffer(c1, c2));
+		}
+		w1++;
+		w2++;
+	}
+}
+
+int	ft_fstrcmp(const char *s1, const char *s2)
+{
+	while ((uintptr_t)s1 & 7)
+	{
 		if (*s1 != *s2 || *s1 == '\0')
 			return ((unsigned char)*s1 - (unsigned char)*s2);
 		s1++;
 		s2++;
 	}
-	w1 = (uint64_t *)s1;
-	w2 = (uint64_t *)s2;
-	while (1)
-	{
-		val1 = *w1;
-		val2 = *w2;
-		null_byte = ((val1 - 0x0101010101010101) & ~val1 & 0x8080808080808080);
-		if (val1 != val2 || null_byte)
-		{
-			char *c1 = (char *)w1;
-			char *c2 = (char *)w2;
-			while (1)
-			{
-				if (*c1 != *c2 || *c1 == '\0')
-					return (unsigned char) *c1 - (unsigned char) *c2;
-				c1++;
-				c2++;
-			}
-		}
-		w1++;
-		w2++;
-	}
+	return (uint64_strcmp((uint64_t *) s1, (uint64_t *) s2));
 }
 /* ************************************************************************** */
 /*                                                                            */
@@ -537,7 +556,7 @@ void	*smart_insert(t_hashtable **tab, t_node *new)
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 10:20:12 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 19:11:51 by secros           ###   ########.fr       */
+/*   Updated: 2026/02/28 19:24:58 by secros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -590,7 +609,7 @@ void	move_table(t_hashtable *old, t_hashtable *new)
 		curr = old->table[i];
 		while (curr != NULL)
 		{
-			index = hash(curr->key) & (new->size - 1);
+			index = curr->hash & (new->size - 1);
 			aux = curr->next;
 			curr->next = new->table[index];
 			new->table[index] = curr;
@@ -623,7 +642,7 @@ void	increase_hashtable_size(t_hashtable **tab)
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 10:15:29 by relaforg          #+#    #+#             */
-/*   Updated: 2026/02/28 19:15:52 by secros           ###   ########.fr       */
+/*   Updated: 2026/02/28 20:00:15 by secros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -683,21 +702,22 @@ void	retrieve_data(t_hashtable *hashtable)
 	free(key);
 }
 
-void	debug(t_hashtable *tab)
-{
-	int j;
-	int	i;
-
-	i = 0;
-	j = 0;
-	while (i < tab->size)
-	{
-		if (tab->table[i])
-			j++;
-		i++;
-	}
-	__builtin_printf("DEBUG: %d element\nDEBUG %d el_nbr\nLoad factor: %f\n", j, tab->el_nbr,(float) tab->el_nbr / j);
-}
+// void	debug(t_hashtable *tab)
+// {
+// 	int	j;
+// 	int	i;
+//
+// 	i = 0;
+// 	j = 0;
+// 	while (i < tab->size)
+// 	{
+// 		if (tab->table[i])
+// 			j++;
+// 		i++;
+// 	}
+// 	__builtin_printf("DEBUG: %d element\nDEBUG %d el_nbr\nLoad factor: %f\n",
+// 	j, tab->el_nbr,(float) tab->el_nbr / j);
+// }
 
 int	main(void)
 {
@@ -709,7 +729,6 @@ int	main(void)
 	hashtable_set_strategie(&hashtable, REPLACE);
 	get_inputs(&hashtable);
 	retrieve_data(hashtable);
-	debug(hashtable);
 	free_hashtable(hashtable, true);
 	return (0);
 }
