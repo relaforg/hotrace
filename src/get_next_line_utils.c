@@ -6,21 +6,20 @@
 /*   By: secros <secros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 09:29:37 by secros            #+#    #+#             */
-/*   Updated: 2026/02/28 16:39:43 by secros           ###   ########.fr       */
+/*   Updated: 2026/03/01 17:50:47 by secros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include "utils.h"
 
 void	buff_cleaner(char *buff, size_t i)
 {
-	size_t	j;
+	size_t	size;
 
-	j = 0;
-	while (buff[i])
-		buff[j++] = buff[i++];
-	while (buff[j])
-		buff[j++] = '\0';
+	size = ft_strlen(&buff[i]);
+	ft_fmemcpy(buff, &buff[i], size);
+	buff[size] = '\0';
 }
 
 int	is_new_line(char *str)

@@ -6,7 +6,7 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 10:15:29 by relaforg          #+#    #+#             */
-/*   Updated: 2026/03/01 13:09:38 by secros           ###   ########.fr       */
+/*   Updated: 2026/03/01 17:56:26 by secros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "utils.h"
 #include <fcntl.h>
 
-#define SIZE 65536
+#define SIZE 4194304
 
 static inline void	get_inputs(t_hashtable **hashtable)
 {
@@ -23,7 +23,7 @@ static inline void	get_inputs(t_hashtable **hashtable)
 	char	*value;
 
 	key = get_next_line(0);
-	while (ft_strlen(key) > 0)
+	while (key && key[0])
 	{
 		value = get_next_line(0);
 		if (!value)
@@ -46,7 +46,7 @@ void	retrieve_data(t_hashtable *hashtable)
 	t_node	*node;
 
 	key = get_next_line(0);
-	while (ft_strlen(key) > 0)
+	while (key && key[0])
 	{
 		node = search(hashtable, key, hash(key));
 		write(1, key, ft_strlen(key));
@@ -91,7 +91,7 @@ void	retrieve_data_from_stdin(t_hashtable *hashtable)
 	if (fd < 0)
 		return ;
 	key = get_next_line(fd);
-	while (ft_strlen(key) > 0)
+	while (key && key[0])
 	{
 		node = search(hashtable, key, hash(key));
 		write(1, key, ft_strlen(key));

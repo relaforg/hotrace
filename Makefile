@@ -16,6 +16,7 @@ SRCS = main.c \
 	   ft_strcpy.c \
 	   ft_strcmp.c \
 	   ft_bzero.c \
+	   ft_fmemcpy.c \
 	   ft_calloc.c
 
 OBJS = $(addprefix $(BUILD_DIR)/, $(SRCS:.c=.o))
