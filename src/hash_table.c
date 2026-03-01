@@ -6,7 +6,7 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 09:42:41 by relaforg          #+#    #+#             */
-/*   Updated: 2026/03/01 10:35:28 by secros           ###   ########.fr       */
+/*   Updated: 2026/03/01 13:09:11 by secros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_hashtable	*init_hashtable(int table_size)
 		return (NULL);
 	tab->size = table_size;
 	tab->el_nbr = 0;
-	tab->strategie = DEFAULT;
+	tab->strategie = DEFAULT_MODE;
 	tab->table = ft_calloc(sizeof(t_node *) * table_size);
 	if (tab->table == NULL)
 	{

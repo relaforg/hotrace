@@ -6,7 +6,7 @@
 /*   By: relaforg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 10:18:53 by relaforg          #+#    #+#             */
-/*   Updated: 2026/03/01 10:39:20 by secros           ###   ########.fr       */
+/*   Updated: 2026/03/01 13:07:17 by secros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,14 @@
 
 # include <stdbool.h>
 # include <stddef.h>
+
+# ifndef KEEP_READING
+#  define KEEP_READING 0
+# endif
+
+# ifndef DEFAULT_MODE
+#  define DEFAULT_MODE 1
+# endif
 
 # define UPPER_TRESHOLD 0.8
 

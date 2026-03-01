@@ -36,6 +36,9 @@ $(BUILD_DIR):
 $(BUILD_DIR)/%.o: %.c Makefile | $(BUILD_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
+keep: CFLAGS += -DKEEP_READING=1 -DDEFAULT_MODE=2
+keep: re
+
 clean:
 	rm -rf $(BUILD_DIR)
 
@@ -44,6 +47,6 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re keep
 
 -include $(DEPS)
